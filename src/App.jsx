@@ -76,7 +76,6 @@ export default function App() {
       <main className="main">
         {store.categories.map(cat => {
           const catTasks = visibleTasks.filter(t => t.categoryId === cat.id);
-          if (catTasks.length === 0) return null;
           return (
             <TaskList
               key={cat.id}
