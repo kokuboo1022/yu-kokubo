@@ -238,6 +238,23 @@ body {
   font-weight: 600;
 }
 
+.task-item.inactive {
+  opacity: 0.38;
+}
+
+.task-item.inactive .task-check-btn {
+  background: #e7e5e4;
+  border-color: #e7e5e4;
+  color: #a8a29e;
+  cursor: default;
+}
+
+.task-item.inactive .task-text {
+  color: var(--color-checked);
+  text-decoration: line-through;
+  cursor: default;
+}
+
 .drag-handle {
   font-size: 1.1rem;
   color: var(--color-border);

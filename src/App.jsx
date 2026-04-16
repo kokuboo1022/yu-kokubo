@@ -15,7 +15,7 @@ function getTodayInfo() {
   return { dayOfWeek, label: `${month}月${date}日（${dayName}）`, dayName };
 }
 
-function isTaskVisible(task, dayOfWeek) {
+function isActiveToday(task, dayOfWeek) {
   if (task.days === 'all') return true;
   return Array.isArray(task.days) && task.days.includes(dayOfWeek);
 }
@@ -28,9 +28,9 @@ export default function App() {
 
   const today = getTodayInfo();
 
-  const visibleTasks = store.tasks.filter(t => isTaskVisible(t, today.dayOfWeek));
-  const totalCount = visibleTasks.length;
-  const checkedCount = visibleTasks.filter(t => t.checked).length;
+  const activeTasks = store.tasks.filter(t => isActiveToday(t, today.dayOfWeek));
+  const totalCount = activeTasks.length;
+  const checkedCount = activeTasks.filter(t => t.checked).length;
   const allDone = totalCount > 0 && checkedCount === totalCount;
 
   function handleEditTask(task) {
@@ -75,7 +75,9 @@ export default function App() {
 
       <main className="main">
         {store.categories.map(cat => {
-          const catTasks = visibleTasks.filter(t => t.categoryId === cat.id);
+          const catTasks = store.tasks
+            .filter(t => t.categoryId === cat.id)
+            .map(t => ({ ...t, inactive: !isActiveToday(t, today.dayOfWeek) }));
           return (
             <TaskList
               key={cat.id}

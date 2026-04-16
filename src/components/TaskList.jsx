@@ -14,16 +14,17 @@ function SortableTaskItem({ task, onToggle, onEdit }) {
   };
 
   return (
-    <li ref={setNodeRef} style={style} className={`task-item ${task.checked ? 'checked' : ''}`}>
+    <li ref={setNodeRef} style={style} className={`task-item ${task.checked ? 'checked' : ''} ${task.inactive ? 'inactive' : ''}`}>
       <span className="drag-handle" {...attributes} {...listeners}>⠿</span>
       <button
         className="task-check-btn"
-        onClick={() => onToggle(task.id)}
+        onClick={() => !task.inactive && onToggle(task.id)}
         aria-label={task.checked ? 'チェックを外す' : 'チェックする'}
+        disabled={task.inactive}
       >
-        <span className="task-checkbox">{task.checked ? '✓' : ''}</span>
+        <span className="task-checkbox">{task.inactive ? '✓' : task.checked ? '✓' : ''}</span>
       </button>
-      <span className="task-text" onClick={() => onToggle(task.id)}>
+      <span className="task-text" onClick={() => !task.inactive && onToggle(task.id)}>
         {task.text}
         {Array.isArray(task.days) && (
           <span className="task-days-badge">
