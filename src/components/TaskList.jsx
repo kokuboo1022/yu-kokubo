@@ -38,7 +38,8 @@ function SortableTaskItem({ task, onToggle, onEdit }) {
 }
 
 export default function TaskList({ category, tasks, onToggle, onEdit, onReorder, onAddToCategory }) {
-  const doneCount = tasks.filter(t => t.checked).length;
+  const activeTasks = tasks.filter(t => !t.inactive);
+  const doneCount = activeTasks.filter(t => t.checked).length;
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
@@ -56,7 +57,7 @@ export default function TaskList({ category, tasks, onToggle, onEdit, onReorder,
       <div className="section-header">
         <span className="section-emoji">{category.emoji}</span>
         <h2 className="section-title">{category.name}</h2>
-        <span className="section-count">{doneCount}/{tasks.length}</span>
+        <span className="section-count">{doneCount}/{activeTasks.length}</span>
         <button className="section-add-btn" onClick={() => onAddToCategory(category.id)} aria-label="タスクを追加">＋</button>
       </div>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
