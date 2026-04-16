@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const DAY_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
 
-export default function EditModal({ task, categories, onSave, onDelete, onClose, onAddCategory, onDeleteCategory, onUpdateCategory }) {
+export default function EditModal({ task, categories, onSave, onDelete, onClose, onAddCategory, onDeleteCategory, onUpdateCategory, onMoveCategory }) {
   const [text, setText] = useState(task?.text ?? '');
   const [categoryId, setCategoryId] = useState(task?.categoryId ?? (categories[0]?.id ?? ''));
   const [daysType, setDaysType] = useState(
@@ -112,6 +112,8 @@ export default function EditModal({ task, categories, onSave, onDelete, onClose,
                   ) : (
                     <>
                       <span>{c.emoji} {c.name}</span>
+                      <button className="btn-secondary small" onClick={() => onMoveCategory(c.id, -1)} disabled={categories.indexOf(c) === 0}>↑</button>
+                      <button className="btn-secondary small" onClick={() => onMoveCategory(c.id, 1)} disabled={categories.indexOf(c) === categories.length - 1}>↓</button>
                       <button className="btn-secondary small" onClick={() => startEditCat(c)}>編集</button>
                       <button className="btn-danger small" onClick={() => onDeleteCategory(c.id)}>削除</button>
                     </>

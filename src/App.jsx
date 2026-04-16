@@ -101,6 +101,7 @@ export default function App() {
           onClose={() => setEditMode(false)}
           onAddCategory={store.addCategory}
           onUpdateCategory={store.updateCategory}
+          onMoveCategory={store.moveCategory}
           onDeleteCategory={store.deleteCategory}
         />
       )}

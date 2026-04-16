@@ -91,6 +91,15 @@ export function useTaskStore() {
     persist(categories.map(c => c.id === catId ? { ...c, ...updates } : c), tasks);
   }
 
+  function moveCategory(catId, direction) {
+    const idx = categories.findIndex(c => c.id === catId);
+    const newIdx = idx + direction;
+    if (newIdx < 0 || newIdx >= categories.length) return;
+    const updated = [...categories];
+    [updated[idx], updated[newIdx]] = [updated[newIdx], updated[idx]];
+    persist(updated, tasks);
+  }
+
   function deleteCategory(catId) {
     persist(
       categories.filter(c => c.id !== catId),
@@ -106,6 +115,7 @@ export function useTaskStore() {
     deleteTask,
     updateTask,
     updateCategory,
+    moveCategory,
     addCategory,
     deleteCategory,
   };
