@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const DAY_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
 
 export default function EditModal({ task, defaultCategoryId, categories, onSave, onDelete, onClose, onAddCategory, onDeleteCategory, onUpdateCategory, onMoveCategory }) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
   const [text, setText] = useState(task?.text ?? '');
   const [categoryId, setCategoryId] = useState(task?.categoryId ?? defaultCategoryId ?? (categories[0]?.id ?? ''));
   const [daysType, setDaysType] = useState(
@@ -51,7 +56,7 @@ export default function EditModal({ task, defaultCategoryId, categories, onSave,
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={onClose} onTouchMove={e => e.preventDefault()}>
       <div className="modal" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
           <h3>{task ? 'タスクを編集' : 'タスクを追加'}</h3>
