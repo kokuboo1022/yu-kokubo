@@ -222,6 +222,20 @@ body {
   font-weight: 600;
 }
 
+.drag-handle {
+  font-size: 1.1rem;
+  color: var(--color-border);
+  cursor: grab;
+  padding: 4px 2px;
+  flex-shrink: 0;
+  touch-action: none;
+  user-select: none;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
 .task-edit-btn {
   background: none;
   border: none;

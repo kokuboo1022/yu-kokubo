@@ -87,6 +87,16 @@ export function useTaskStore() {
     persist([...categories, newCat], tasks);
   }
 
+  function reorderTasks(activeId, overId) {
+    const activeIdx = tasks.findIndex(t => t.id === activeId);
+    const overIdx = tasks.findIndex(t => t.id === overId);
+    if (activeIdx === -1 || overIdx === -1 || activeIdx === overIdx) return;
+    const updated = [...tasks];
+    const [moved] = updated.splice(activeIdx, 1);
+    updated.splice(overIdx, 0, moved);
+    persist(categories, updated);
+  }
+
   function updateCategory(catId, updates) {
     persist(categories.map(c => c.id === catId ? { ...c, ...updates } : c), tasks);
   }
@@ -110,6 +120,7 @@ export function useTaskStore() {
   return {
     categories,
     tasks,
+    reorderTasks,
     toggleTask,
     addTask,
     deleteTask,

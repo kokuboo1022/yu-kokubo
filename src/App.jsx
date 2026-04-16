@@ -83,6 +83,7 @@ export default function App() {
               onToggle={store.toggleTask}
               onEdit={handleEditTask}
               onDeleteTask={store.deleteTask}
+              onReorder={store.reorderTasks}
             />
           );
         })}
