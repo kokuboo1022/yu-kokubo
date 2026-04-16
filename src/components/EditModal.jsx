@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const DAY_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
 
-export default function EditModal({ task, categories, onSave, onDelete, onClose, onAddCategory, onDeleteCategory }) {
+export default function EditModal({ task, categories, onSave, onDelete, onClose, onAddCategory, onDeleteCategory, onUpdateCategory }) {
   const [text, setText] = useState(task?.text ?? '');
   const [categoryId, setCategoryId] = useState(task?.categoryId ?? (categories[0]?.id ?? ''));
   const [daysType, setDaysType] = useState(
@@ -14,6 +14,9 @@ export default function EditModal({ task, categories, onSave, onDelete, onClose,
   const [showCatManager, setShowCatManager] = useState(false);
   const [newCatName, setNewCatName] = useState('');
   const [newCatEmoji, setNewCatEmoji] = useState('📌');
+  const [editingCatId, setEditingCatId] = useState(null);
+  const [editingCatName, setEditingCatName] = useState('');
+  const [editingCatEmoji, setEditingCatEmoji] = useState('');
 
   function toggleDay(d) {
     setSelectedDays(prev =>
@@ -33,6 +36,18 @@ export default function EditModal({ task, categories, onSave, onDelete, onClose,
     onAddCategory(newCatName.trim(), newCatEmoji);
     setNewCatName('');
     setNewCatEmoji('📌');
+  }
+
+  function startEditCat(c) {
+    setEditingCatId(c.id);
+    setEditingCatName(c.name);
+    setEditingCatEmoji(c.emoji);
+  }
+
+  function handleSaveCat(id) {
+    if (!editingCatName.trim()) return;
+    onUpdateCategory(id, { name: editingCatName.trim(), emoji: editingCatEmoji });
+    setEditingCatId(null);
   }
 
   return (
@@ -77,11 +92,30 @@ export default function EditModal({ task, categories, onSave, onDelete, onClose,
               <p className="cat-manager-title">カテゴリを管理</p>
               {categories.map(c => (
                 <div key={c.id} className="cat-manager-row">
-                  <span>{c.emoji} {c.name}</span>
-                  <button
-                    className="btn-danger small"
-                    onClick={() => onDeleteCategory(c.id)}
-                  >削除</button>
+                  {editingCatId === c.id ? (
+                    <>
+                      <input
+                        className="form-input small"
+                        value={editingCatEmoji}
+                        onChange={e => setEditingCatEmoji(e.target.value)}
+                        style={{ width: '3rem' }}
+                        maxLength={2}
+                      />
+                      <input
+                        className="form-input small"
+                        value={editingCatName}
+                        onChange={e => setEditingCatName(e.target.value)}
+                      />
+                      <button className="btn-primary small" onClick={() => handleSaveCat(c.id)}>保存</button>
+                      <button className="btn-secondary small" onClick={() => setEditingCatId(null)}>✕</button>
+                    </>
+                  ) : (
+                    <>
+                      <span>{c.emoji} {c.name}</span>
+                      <button className="btn-secondary small" onClick={() => startEditCat(c)}>編集</button>
+                      <button className="btn-danger small" onClick={() => onDeleteCategory(c.id)}>削除</button>
+                    </>
+                  )}
                 </div>
               ))}
               <div className="cat-add-row">

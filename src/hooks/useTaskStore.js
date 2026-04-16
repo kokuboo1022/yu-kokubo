@@ -87,6 +87,10 @@ export function useTaskStore() {
     persist([...categories, newCat], tasks);
   }
 
+  function updateCategory(catId, updates) {
+    persist(categories.map(c => c.id === catId ? { ...c, ...updates } : c), tasks);
+  }
+
   function deleteCategory(catId) {
     persist(
       categories.filter(c => c.id !== catId),
@@ -101,6 +105,7 @@ export function useTaskStore() {
     addTask,
     deleteTask,
     updateTask,
+    updateCategory,
     addCategory,
     deleteCategory,
   };

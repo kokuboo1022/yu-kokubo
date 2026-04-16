@@ -100,6 +100,7 @@ export default function App() {
           onDelete={editTarget ? () => { store.deleteTask(editTarget.id); setEditMode(false); } : null}
           onClose={() => setEditMode(false)}
           onAddCategory={store.addCategory}
+          onUpdateCategory={store.updateCategory}
           onDeleteCategory={store.deleteCategory}
         />
       )}
