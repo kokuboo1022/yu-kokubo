@@ -23,7 +23,8 @@ function isTaskVisible(task, dayOfWeek) {
 export default function App() {
   const store = useTaskStore();
   const [editMode, setEditMode] = useState(false);
-  const [editTarget, setEditTarget] = useState(null); // null or task object
+  const [editTarget, setEditTarget] = useState(null);
+  const [defaultCategoryId, setDefaultCategoryId] = useState(null);
 
   const today = getTodayInfo();
 
@@ -37,8 +38,9 @@ export default function App() {
     setEditMode(true);
   }
 
-  function handleAddTask() {
+  function handleAddTask(categoryId = null) {
     setEditTarget(null);
+    setDefaultCategoryId(categoryId);
     setEditMode(true);
   }
 
@@ -84,6 +86,7 @@ export default function App() {
               onEdit={handleEditTask}
               onDeleteTask={store.deleteTask}
               onReorder={store.reorderTasks}
+              onAddToCategory={handleAddTask}
             />
           );
         })}
@@ -96,6 +99,7 @@ export default function App() {
       {editMode && (
         <EditModal
           task={editTarget}
+          defaultCategoryId={defaultCategoryId}
           categories={store.categories}
           onSave={handleSaveTask}
           onDelete={editTarget ? () => { store.deleteTask(editTarget.id); setEditMode(false); } : null}

@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "morning-todo-a4ff4"
-  }
+  },
+  "targets": {
+    "morning-todo-a4ff4": {
+      "hosting": {
+        "main": [
+          "morning-todo-a4ff4"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 const DAY_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
 
-export default function EditModal({ task, categories, onSave, onDelete, onClose, onAddCategory, onDeleteCategory, onUpdateCategory, onMoveCategory }) {
+export default function EditModal({ task, defaultCategoryId, categories, onSave, onDelete, onClose, onAddCategory, onDeleteCategory, onUpdateCategory, onMoveCategory }) {
   const [text, setText] = useState(task?.text ?? '');
-  const [categoryId, setCategoryId] = useState(task?.categoryId ?? (categories[0]?.id ?? ''));
+  const [categoryId, setCategoryId] = useState(task?.categoryId ?? defaultCategoryId ?? (categories[0]?.id ?? ''));
   const [daysType, setDaysType] = useState(
     !task || task.days === 'all' ? 'all' : 'select'
   );

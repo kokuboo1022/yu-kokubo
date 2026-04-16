@@ -36,7 +36,7 @@ function SortableTaskItem({ task, onToggle, onEdit }) {
   );
 }
 
-export default function TaskList({ category, tasks, onToggle, onEdit, onReorder }) {
+export default function TaskList({ category, tasks, onToggle, onEdit, onReorder, onAddToCategory }) {
   const doneCount = tasks.filter(t => t.checked).length;
 
   const sensors = useSensors(
@@ -56,6 +56,7 @@ export default function TaskList({ category, tasks, onToggle, onEdit, onReorder 
         <span className="section-emoji">{category.emoji}</span>
         <h2 className="section-title">{category.name}</h2>
         <span className="section-count">{doneCount}/{tasks.length}</span>
+        <button className="section-add-btn" onClick={() => onAddToCategory(category.id)} aria-label="タスクを追加">＋</button>
       </div>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={tasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
