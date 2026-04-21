@@ -47,7 +47,7 @@ function SortableSongRow({ id, index, song, onRemove }) {
         {song?.artist && <span className="row-artist">{song.artist}</span>}
       </div>
       <div className="row-meta">
-        {song?.key && <span className="row-key">{song.key}</span>}
+        {song?.tempo && <span className="row-key">{{ high: '速い', middle: '中', low: '遅い' }[song.tempo]}</span>}
         <span className="row-duration">{formatDuration(song?.durationSec)}</span>
       </div>
       <button className="btn-remove" onClick={() => onRemove(id)} aria-label="セットリストから削除">
@@ -271,7 +271,7 @@ export default function SetlistPage() {
                       {song.artist && <span className="library-row-artist">{song.artist}</span>}
                       <div className="library-row-meta">
                         <span>{formatDuration(song.durationSec)}</span>
-                        {song.key && <span>{song.key}</span>}
+                        {song.tempo && <span>{{ high: '速い', middle: '中', low: '遅い' }[song.tempo]}</span>}
                         {song.tags?.map(t => (
                           <span key={t} className="tag tag--sm">{t}</span>
                         ))}

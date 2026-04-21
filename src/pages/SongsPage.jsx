@@ -123,8 +123,7 @@ export default function SongsPage() {
                 {song.artist && <div className="song-item-artist">{song.artist}</div>}
                 <div className="song-item-meta">
                   <span>{formatDuration(song.durationSec)}</span>
-                  {song.key && <span>Key: {song.key}</span>}
-                  {song.bpm && <span>{song.bpm} BPM</span>}
+                  {song.tempo && <span>{{ high: '速い', middle: '中', low: '遅い' }[song.tempo]}</span>}
                   {(song.usageCount || 0) > 0 && (
                     <span className="song-meta-usage">{song.usageCount}回採用</span>
                   )}
