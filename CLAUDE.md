@@ -19,7 +19,7 @@
 | 案件名 | 炎の祭典 公式HP新規構築 |
 | 納期 | 2026年6月上旬 |
 | サーバー | さくらインターネット（契約予定） |
-| ドメイン | 確認待ち |
+| ドメイン | tezutsuhanabi.com |
 | ローカル開発 | Local by Flywheel |
 | テーマ | SWELL（有料・¥17,600）+ 子テーマ |
 | 参考サイト | gamagorimatsuri.com |
